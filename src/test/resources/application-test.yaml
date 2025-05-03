@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    url: jdbc:tc:postgresql:17.4:///test_database
+    username: postgres
+    password: password
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    schemas: listings
+  cloud:
+    discovery:
+      enabled: false
+    service-registry:
+      auto-registration:
+        enabled: false
+eureka:
+  client:
+    enabled: false
+    register-with-eureka: false
+    fetch-registry: false
