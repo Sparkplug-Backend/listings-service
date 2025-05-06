@@ -1,6 +1,6 @@
 package com.sparkplug.listings.application.mapper;
 
-import com.sparkplug.listings.application.dto.CarModificationDto;
+import com.sparkplug.listings.application.dto.CarConfigurationDto;
 import com.sparkplug.listings.application.dto.ListingDto;
 import com.sparkplug.listings.domain.model.Listing;
 import org.mapstruct.*;
@@ -16,5 +16,5 @@ public interface ListingMapper {
     @Mapping(target = "images", source = "listing.images")
     @Mapping(target = "price", source = "listing.price.amount")
     @Mapping(target = "mileage", source = "listing.mileage.value")
-    ListingDto toDto(Listing listing, CarModificationDto carModification);
+    ListingDto toDto(Listing listing, CarConfigurationDto carConfiguration);
 }

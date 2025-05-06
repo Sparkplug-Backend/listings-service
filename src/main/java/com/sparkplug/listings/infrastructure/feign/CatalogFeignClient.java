@@ -1,6 +1,6 @@
 package com.sparkplug.listings.infrastructure.feign;
 
-import com.sparkplug.listings.application.dto.CarModificationDto;
+import com.sparkplug.listings.application.dto.CarConfigurationDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,8 +13,8 @@ import java.util.Set;
 public interface CatalogFeignClient {
 
     @GetMapping("/modifications/detailed/{id}")
-    CarModificationDto getModification(@PathVariable Long id);
+    CarConfigurationDto getModification(@PathVariable Long id);
 
     @GetMapping("/modifications/detailed/")
-    Set<CarModificationDto> getModifications(@RequestParam Set<Long> ids);
+    Set<CarConfigurationDto> getModifications(@RequestParam Set<Long> ids);
 }

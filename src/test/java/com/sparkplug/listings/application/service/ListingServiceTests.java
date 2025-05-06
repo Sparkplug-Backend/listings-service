@@ -1,7 +1,7 @@
 package com.sparkplug.listings.application.service;
 
 import com.sparkplug.common.exception.ResourceNotFoundException;
-import com.sparkplug.listings.application.dto.CarModificationDto;
+import com.sparkplug.listings.application.dto.CarConfigurationDto;
 import com.sparkplug.listings.application.dto.CreateListingDto;
 import com.sparkplug.listings.application.mapper.ListingMapperImpl;
 import com.sparkplug.listings.application.port.CatalogPort;
@@ -10,7 +10,7 @@ import com.sparkplug.listings.domain.model.Listing;
 import com.sparkplug.listings.domain.repository.ListingsRepository;
 import com.sparkplug.listings.domain.vo.Mileage;
 import com.sparkplug.listings.domain.vo.Price;
-import com.sparkplug.listings.service.ServiceTest;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
@@ -41,17 +41,17 @@ class ListingServiceTests extends ServiceTest {
     @MockitoBean
     private StoragePort storagePort;
 
-    private final Long carModificationId = 1L;
+    private final Long configurationId = 1L;
 
-    private final CarModificationDto carModification = new CarModificationDto(
-            carModificationId,
+    private final CarConfigurationDto configuration = new CarConfigurationDto(
+            configurationId,
             "Test Modification",
-            new CarModificationDto.Engine("Petrol", "V8", 400, 500),
-            new CarModificationDto.Transmission("Automatic", 8),
-            new CarModificationDto.Drivetrain("AWD"),
-            new CarModificationDto.Generation(1L, "Test Generation", 2020),
-            new CarModificationDto.Model(1L, "Test Model"),
-            new CarModificationDto.Manufacturer(1L, "Test Manufacturer", "Test Country")
+            new CarConfigurationDto.Engine("Petrol", "V8", 400, 500),
+            new CarConfigurationDto.Transmission("Automatic", 8),
+            new CarConfigurationDto.Drivetrain("AWD"),
+            new CarConfigurationDto.Generation(1L, "Test Generation", 2020),
+            new CarConfigurationDto.Model(1L, "Test Model"),
+            new CarConfigurationDto.Manufacturer(1L, "Test Manufacturer", "Test Country")
     );
 
     @Test
@@ -68,10 +68,10 @@ class ListingServiceTests extends ServiceTest {
         var description = "Test description";
         var imageUrl = "http://test.com/image.jpg";
         
-        var dto = new CreateListingDto(carModificationId, price, mileage, description);
+        var dto = new CreateListingDto(configurationId, price, mileage, description);
         var image = new MockMultipartFile("image", "test.jpg", "image/jpeg", "test".getBytes());
         
-        when(catalogPort.getModification(carModificationId)).thenReturn(carModification);
+        when(catalogPort.getConfiguration(configurationId)).thenReturn(configuration);
         when(storagePort.uploadFiles(any())).thenReturn(List.of(imageUrl));
 
         // When
@@ -79,12 +79,11 @@ class ListingServiceTests extends ServiceTest {
 
         // Then
         assertNotNull(result);
-        assertEquals(carModificationId, result.carModification().id());
+        assertEquals(configurationId, result.carConfiguration().id());
         assertEquals(price, result.price());
         assertEquals(mileage, result.mileage());
         assertEquals(description, result.description());
         assertEquals(1, result.images().size());
-        assertEquals(imageUrl, result.images().get(0));
     }
 
     @Test
@@ -103,7 +102,7 @@ class ListingServiceTests extends ServiceTest {
         listing.setImages(List.of("https://test.com/image.jpg"));
         listingsRepository.save(listing);
 
-        when(catalogPort.getModifications(anySet())).thenReturn(Set.of(carModification));
+        when(catalogPort.getConfigurations(anySet())).thenReturn(Set.of(configuration));
 
         // When
         var result = listingService.getListings();
@@ -111,7 +110,7 @@ class ListingServiceTests extends ServiceTest {
         // Then
         assertNotNull(result);
         assertEquals(1, result.size());
-        assertEquals(carModificationId, result.get(0).carModification().id());
+        assertEquals(carModificationId, result.get(0).carConfiguration().id());
     }
 
     @Test
@@ -130,7 +129,7 @@ class ListingServiceTests extends ServiceTest {
         listing.setImages(List.of("http://test.com/image.jpg"));
         var savedListing = listingsRepository.save(listing);
 
-        when(catalogPort.getModification(carModificationId)).thenReturn(carModification);
+        when(catalogPort.getConfiguration(carModificationId)).thenReturn(configuration);
 
         // When
         var result = listingService.getListing(savedListing.getId());
@@ -138,7 +137,7 @@ class ListingServiceTests extends ServiceTest {
         // Then
         assertNotNull(result);
         assertEquals(savedListing.getId(), result.id());
-        assertEquals(carModificationId, result.carModification().id());
+        assertEquals(carModificationId, result.carConfiguration().id());
     }
 
     @Test

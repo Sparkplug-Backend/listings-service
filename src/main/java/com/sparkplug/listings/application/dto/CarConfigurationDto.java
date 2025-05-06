@@ -1,6 +1,6 @@
 package com.sparkplug.listings.application.dto;
 
-public record CarModificationDto(
+public record CarConfigurationDto(
 
         Long id,
         String name,

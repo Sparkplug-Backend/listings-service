@@ -1,4 +1,4 @@
-package com.sparkplug.listings.service;
+package com.sparkplug.listings.application.service;
 
 import com.sparkplug.listings.domain.model.Listing;
 import com.sparkplug.listings.domain.vo.Mileage;

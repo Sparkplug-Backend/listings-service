@@ -6,7 +6,7 @@ import java.util.List;
 
 public record ListingDto(
     Long id,
-    CarModificationDto carModification,
+    CarConfigurationDto carConfiguration,
     BigDecimal price,
     Integer mileage,
     String description,

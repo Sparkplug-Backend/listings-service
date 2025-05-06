@@ -1,6 +1,6 @@
 package com.sparkplug.listings.infrastructure.adapter;
 
-import com.sparkplug.listings.application.dto.CarModificationDto;
+import com.sparkplug.listings.application.dto.CarConfigurationDto;
 import com.sparkplug.listings.application.port.CatalogPort;
 import com.sparkplug.listings.infrastructure.feign.CatalogFeignClient;
 import org.springframework.stereotype.Component;
@@ -16,12 +16,12 @@ public class CatalogAdapter implements CatalogPort {
     }
 
     @Override
-    public CarModificationDto getModification(Long id) {
+    public CarConfigurationDto getConfiguration(Long id) {
         return catalogClient.getModification(id);
     }
 
     @Override
-    public Set<CarModificationDto> getModifications(Set<Long> ids) {
+    public Set<CarConfigurationDto> getConfigurations(Set<Long> ids) {
         return catalogClient.getModifications(ids);
     }
 }
